@@ -22,25 +22,23 @@ Pins on LCD, from data sheet
 void LCDInit(void){
 	CONTROLPORT_DDR |= (1 << RS) | (1 << RW) | (1 << EN);
 	_delay_ms(15);
-
 	LCDSendCommand(CMD_CLEARDISPLAY);
 	_delay_ms(2);
-
 	LCDSendCommand(CMD_SETBITMODE);
 	_delay_us(50);
-
 	LCDSendCommand(CMD_SETDISPLAYMODE);
 	_delay_us(50);
 }
 
+/* Send enable signal */
 void LCDEnable(void){
 	CONTROLPORT |= (1 << EN);
-	asm volatile ("nop");
 	asm volatile ("nop");
 	asm volatile ("nop");
 	CONTROLPORT &= ~(1 << EN);
 }
 
+/* Wait until display is not busy */
 void LCDBusyCheck(void){
 	DATAPORT_DDR = READ;
 	CONTROLPORT |= (1 << RW);
@@ -51,6 +49,7 @@ void LCDBusyCheck(void){
 	DATAPORT_DDR = WRITE;
 }
 
+/* Send command to display */
 void LCDSendCommand(uint8_t command){
 	LCDBusyCheck();
 	DATAPORT = command;
@@ -59,6 +58,7 @@ void LCDSendCommand(uint8_t command){
 	DATAPORT = 0;
 }
 
+/* Print a single character on display */
 void LCDSendChar(uint8_t character){
 	LCDBusyCheck();
 	DATAPORT = character;
@@ -72,7 +72,7 @@ void LCDSendChar(uint8_t character){
 void LCDSendString(char * string){
   for(int i = 0; string[i] != '\0'; i++){
       LCDSendChar(string[i]);
-      _delay_ms(50);
+      _delay_ms(150);
   }
 }
 
