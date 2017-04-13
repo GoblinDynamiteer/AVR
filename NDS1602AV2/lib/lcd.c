@@ -67,3 +67,41 @@ void LCDSendChar(uint8_t character){
 	LCDEnable();
 	DATAPORT = 0;
 }
+
+/* Prints out a string on display */
+void LCDSendString(char * string){
+  for(int i = 0; string[i] != '\0'; i++){
+      LCDSendChar(string[i]);
+      _delay_ms(50);
+  }
+}
+
+/* Prints out a string on display, second row */
+void LCDSendStringSR(char * string){
+  LCDSetCursorSR();
+  LCDSendString(string);
+}
+
+/* Prints string at row and position */
+void LCDSendStringAt(char * string, uint8_t pos, uint8_t row){
+  LCDSendCommand(CMD_CURSORHOME);
+  _delay_ms(2);
+  if(row == 2){
+    LCDSetCursorSR();
+  }
+  for(int i = 0; i < pos-1; i++){
+    LCDSendCommand(CMD_CURSORRIGHT);
+    _delay_us(50);
+  }
+  LCDSendString(string);
+}
+
+/* Sets cursor at second row start position*/
+void LCDSetCursorSR(void){
+  LCDSendCommand(CMD_CURSORHOME);
+  _delay_ms(2);
+  for(int i = 0; i < 40; i++){
+    LCDSendCommand(CMD_CURSORRIGHT);
+    _delay_us(50);
+  }
+}
