@@ -36,8 +36,6 @@ Pins on LCD, from data sheet
 #define RW 4
 #define EN 5
 
-#define OE (0b11110111)
-
 #define CMD_CLEARDISPLAY 0x01
 #define CMD_SETBITMODE 0x38 //8-bit mode
 //Entire display ON, Cursor ON, no blink
@@ -46,7 +44,7 @@ Pins on LCD, from data sheet
 #define CMD_CURSORHOME (0b00000010)
 #define CMD_CURSORLEFT (0b00010000)
 
-/* lcd.h */
+/* lcd.c */
 void LCDSendChar(uint8_t character);
 void LCDSendString(char * string);
 void LCDSendStringSR(char * string);
