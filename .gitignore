@@ -28,5 +28,18 @@
 *.x86_64
 *.hex
 
+# Atmel Studio
+[Dd]ebug/
+[Rr]elease/
+*.d
+*.eep
+*.elf
+*.hex
+*.map
+*.srec
+
+#User Specific Files
+*.atsuo
+
 # Debug files
 *.dSYM/
