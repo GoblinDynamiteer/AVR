@@ -13,6 +13,11 @@ LCD Display OUTPUT
 
 **UART**  
 Serial output with RX/TX  
+[YouTube](https://youtu.be/f4aO6Cng5WE)  
+
+**ADC**   
+Analog to Digital conversion  
+[YouTube](https://youtu.be/QwREf1pDAZU)  
 
 
 ---
