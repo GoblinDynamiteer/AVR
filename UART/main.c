@@ -22,10 +22,14 @@
 #define BAUD_RATE 2400
 
 int main(void){
-	uint8_t * data = "ABC ";
+	pinMode(28, OUTPUT); //LED-pin
 	SerialInit(F_CPU/16/BAUD_RATE-1);
 	while(1){
-    SerialSend(data);
+    SerialSendNL("LED ON");
+		setPin(28, ON);
+		wait(1000);
+		SerialSendNL("LED OFF");
+		setPin(28, OFF);
 		wait(1000);
 	}
 	return 0;

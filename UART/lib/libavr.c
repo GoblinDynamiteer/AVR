@@ -87,7 +87,7 @@ void SerialInit(uint8_t ubrr){
 }
 
 /* From 328p Datasheet page 177  */
-void SerialSendData(uint8_t data){
+void _SerialSendData(char data){
   /* Wait for empty transmit buffer */
   while ( !( UCSR0A & (1<<UDRE0)) )
   ;
@@ -96,8 +96,26 @@ void SerialSendData(uint8_t data){
 }
 
 /*  Send array of data to USART   */
-void SerialSend(uint8_t * data){
+void SerialSend(char * data){
   for(int i = 0; data[i] != '\0'; i++){
-    SerialSendData(data[i]);
+    _SerialSendData(data[i]);
   }
+}
+
+/*  Send array of data to USART with new line   */
+void SerialSendNL(char * data){
+  for(int i = 0; data[i] != '\0'; i++){
+    _SerialSendData(data[i]);
+  }
+	_SerialNewLine();
+}
+
+/*	Send CRLF (new line) 	*/
+void _SerialNewLine(void){
+  while ( !( UCSR0A & (1<<UDRE0)) )
+		;
+  UDR0 = 0xD;
+	while ( !( UCSR0A & (1<<UDRE0)) )
+	;
+	UDR0 = 0xA;
 }
