@@ -5,10 +5,6 @@
 
 **Personal coding projects**   
 
-**Description:**  
-Simple pedometer built with an Atmel Atmega328p MCU and 3-axis accelerometer.  
-Steps are displayed on a small display.
-
 ---
 
 *Folders:*  
