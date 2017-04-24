@@ -2,7 +2,7 @@
  * UART.c
  *
  * Created: 2017-04-24
- * Author: Johan Kämpe
+ * Author: Johan Kï¿½mpe
  *
  *  Use USART to transmit data from Atmega328p.
  *  Pins:
@@ -51,9 +51,8 @@ void USART_init(uint8_t ubrr){
 /* From 328p Datasheet page 177  */
 void USART_Transmit(uint8_t data){
   /* Wait for empty transmit buffer */
-  while (!( UCSRnA & (1<<UDREn))){
-    ;
-  }
+  while ( !( UCSR0A & (1<<UDRE0)) )
+  ;
   /* Put data into buffer, sends the data */
-  UDRn = data;
+  UDR0 = data;
 }
