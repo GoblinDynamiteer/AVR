@@ -30,7 +30,7 @@ int main(void){
 	uint8_t data = 'A';
 	USART_init(MYUBRR);        //USART initialization
 	while(1){
-		UART_send(data);
+		USART_Transmit(data);
 		 _delay_ms(1000);
 	}
 	return 0;
