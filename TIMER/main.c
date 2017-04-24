@@ -10,12 +10,20 @@
 
 #define LEDPIN 28
 
+void timerInit64(void);
+
 int main(void){
   pinMode(LEDPIN, OUTPUT);
+  setPin(LEDPIN, OFF);
+  timerInit64();
   while(1){
-    setPin(LEDPIN, ON);
-    sleep(1200);
-    setPin(LEDPIN, OFF);
-    sleep(1200);
+    if(TCNT1 >= 15624){
+      togglePin(LEDPIN);
+      TCNT1 = 0;
+    }
   }
+}
+
+void timerInit64(void){
+  TCCR1B |= ((1 << CS10) | (1 << CS11)); // Set up timer at Fcpu/64
 }

@@ -29,6 +29,7 @@ void pinMode(uint8_t pin, uint8_t io);
 uint8_t getPortPin(uint8_t pin);
 uint8_t getPort(uint8_t pin);
 void setPin(uint8_t pin, uint8_t onOff);
+void togglePin(uint8_t pin);
 
 /*  UART Serial communication   */
 void SerialSend(char * data);

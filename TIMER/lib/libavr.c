@@ -48,6 +48,22 @@ void setPin(uint8_t pin, uint8_t onOff){
 	}
 }
 
+void togglePin(uint8_t pin){
+	switch(getPort(pin)){
+		/* Port C */
+		case 'C':
+			PORTC ^= (1 << getPortPin(pin));
+		/* Port D */
+		case 'D':
+			PORTD ^= (1 << getPortPin(pin));
+		/* Port B */
+		case 'B':
+			PORTB ^= (1 << getPortPin(pin));
+			break;
+	}
+}
+
+
 uint8_t getPortPin(uint8_t pin){
 	const uint8_t num[28] = {
 		6,0,1,2,3,4,0,0,6,7,5,6,7,0,1,2,3,4,5,0,0,0,0,1,2,3,4,5
