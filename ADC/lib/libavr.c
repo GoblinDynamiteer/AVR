@@ -119,3 +119,28 @@ void _SerialNewLine(void){
 	;
 	UDR0 = 0xA;
 }
+
+uint16_t ADCRead(uint8_t ADCpin){
+  /*   Channel inputs 000 ADC0 -> 111 ADC7  */
+  ADMUX &= 0b11111000; //Clear last three bits
+  ADMUX |= ADCpin;
+  _ADCStart();
+  /*  ADC result register -- data sheet page 247 */
+  return (ADC);
+}
+
+int _ADCStart(void){
+  /*  Start conversion - data sheet page 249  */
+  ADCSRA |= (1<<ADSC);
+  /*  ADSC is set to 0 when conversion is complete  */
+  while(ADCSRA & (1<<ADSC)){
+    ;
+  }
+}
+
+void ADCInit(void){
+	// REFS1/REFS0 0/1 = AVcc with external capacitor at AREF pin
+	ADMUX = (1<<REFS0);
+	/*	 	*/
+	ADCSRA = (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+}
