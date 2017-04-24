@@ -24,13 +24,15 @@
 
 /*  Function prototypes   */
 void USART_Transmit(uint8_t data);
+void USART_Transmit_String(uint8_t * data);
 void USART_init(uint8_t ubrr);
 
 int main(void){
-	uint8_t data = 'A';
+	uint8_t * data = "ABC ";
 	USART_init(MYUBRR);        //USART initialization
 	while(1){
-		USART_Transmit(data);
+		//USART_Transmit(data);
+    USART_Transmit_String(data);
 		 _delay_ms(1000);
 	}
 	return 0;
@@ -55,4 +57,11 @@ void USART_Transmit(uint8_t data){
   ;
   /* Put data into buffer, sends the data */
   UDR0 = data;
+}
+
+/*  Send array of data to USART   */
+void USART_Transmit_String(uint8_t * data){
+  for(int i = 0; data[i] != '\0'; i++){
+    USART_Transmit(data[i]);
+  }
 }
