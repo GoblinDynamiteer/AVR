@@ -1,6 +1,6 @@
 /*   Atmega328p function library
 
-    by Johan Kämpe
+    by Johan Kï¿½mpe
     https://www.linkedin.com/in/johankampe/
     https://github.com/GoblinDynamiteer/
 
@@ -138,7 +138,7 @@ void _SerialNewLine(void){
 
 uint16_t ADCRead(uint8_t ADCpin){
   /*   Channel inputs 000 ADC0 -> 111 ADC7  */
-  ADMUX &= 0b11111000; //Clear last three bits
+  ADMUX &= (0b11111000); //Clear last three bits
   ADMUX |= ADCpin;
   _ADCStart();
   /*  ADC result register -- data sheet page 247 */

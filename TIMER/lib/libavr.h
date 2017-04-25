@@ -7,8 +7,14 @@
 */
 
 #ifndef F_CPU
-#define F_CPU 1000000
+#define F_CPU 1000000UL
 #endif
+
+#ifndef BAUD_RATE
+#define BAUD_RATE 2400
+#endif
+
+#define BAUD_VAL F_CPU/16/BAUD_RATE-1
 
 #ifndef _LIBAVR_H
 #define _LIBAVR_H
