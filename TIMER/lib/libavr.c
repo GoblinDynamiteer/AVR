@@ -1,6 +1,6 @@
 /*   Atmega328p function library
 
-    by Johan Kï¿½mpe
+    by Johan Kämpe
     https://www.linkedin.com/in/johankampe/
     https://github.com/GoblinDynamiteer/
 
@@ -138,7 +138,7 @@ void _SerialNewLine(void){
 
 uint16_t ADCRead(uint8_t ADCpin){
   /*   Channel inputs 000 ADC0 -> 111 ADC7  */
-  ADMUX &= (0b11111000); //Clear last three bits
+  ADMUX &= 0b11111000; //Clear last three bits
   ADMUX |= ADCpin;
   _ADCStart();
   /*  ADC result register -- data sheet page 247 */
@@ -159,4 +159,20 @@ void ADCInit(void){
 	ADMUX = (1<<REFS0);
 	/*	 	*/
 	ADCSRA = (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+}
+
+/*   TIMER0: 8 bit  */
+void timer0init(uint8_t prescaler){
+    /*  Set up Timer/Counter 0 with prescaling   */
+    TCCR0B |= prescaler; //Data sheet page 141
+    /*  Init Timer/Counter 0   */
+    SET_COUNTER0 = 0;
+}
+
+/*   TIMER1: 16 bit  */
+void timer1init(uint8_t prescaler){
+    /*  Set up Timer/Counter 0 with prescaling   */
+    TCCR1B |= prescaler; //Data sheet page 173
+    /*  Init Timer/Counter 0   */
+    SET_COUNTER1 = 0;
 }
