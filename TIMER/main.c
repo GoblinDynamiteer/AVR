@@ -11,19 +11,7 @@
 
 #define LEDPIN 28
 
-#define TIMER_PRESCALER_OFF (0b00000001)
-#define TIMER_PRESCALER_8 (0b00000010)
-#define TIMER_PRESCALER_64 (0b00000011)
-#define TIMER_PRESCALER_256 (0b00000100)
-#define TIMER_PRESCALER_1024 (0b00000101)
-
-#define GET_COUNTER0 TCNT0
-#define SET_COUNTER0 TCNT0
-
-#define GET_COUNTER1 TCNT1
-#define SET_COUNTER1 TCNT1
-
-void timer0init(uint8_t prescaler);
+#define TARGET_DELAY_MS 200
 
 int main(void){
   pinMode(LEDPIN, OUTPUT);
@@ -38,25 +26,9 @@ int main(void){
       secTicker++;
       SET_COUNTER1 = 0;
     }
-    if(secTicker >= 10){
+    if(secTicker >= 1000/TARGET_DELAY_MS){
       togglePin(LEDPIN);
       secTicker = 0;
     }
   }
-}
-
-/*   TIMER0: 8 bit  */
-void timer0init(uint8_t prescaler){
-    /*  Set up Timer/Counter 0 with prescaling   */
-    TCCR0B |= prescaler; //Data sheet page 141
-    /*  Init Timer/Counter 0   */
-    SET_COUNTER0 = 0; //Data sheet page 145
-}
-
-/*   TIMER1: 16 bit  */
-void timer1init(uint8_t prescaler){
-    /*  Set up Timer/Counter 0 with prescaling   */
-    TCCR1B |= prescaler; //Data sheet page 141
-    /*  Init Timer/Counter 0   */
-    SET_COUNTER1 = 0; //Data sheet page 145
 }
