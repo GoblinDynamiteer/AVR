@@ -16,6 +16,8 @@
 
 #define BAUD_VAL F_CPU/16/BAUD_RATE-1 //Data sheet page 173
 
+#define SCL_FREQUENCY 100000UL //100kHz
+
 #ifndef _LIBAVR_H
 #define _LIBAVR_H
 
@@ -68,6 +70,8 @@ void ADCInit(void);
 void timer0init(uint8_t prescaler);
 void timer1init(uint8_t prescaler);
 
+/*  I2C */
+void i2cInit(void);
 
 
 #endif

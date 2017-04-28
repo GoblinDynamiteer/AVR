@@ -17,7 +17,8 @@ int main(void){
   uint8_t success;
   SerialInit(F_CPU/16/BAUD_RATE-1);
   /*   INIT I2C, NO PRESCALING  */
-  i2c_init();
+  //i2c_init();
+  i2cInit();
   _delay_us(10);
   success = blinkM_stopScript();
   if(success){
@@ -26,7 +27,7 @@ int main(void){
   else{
     SerialSendNL("ERROR stopping BlinkM Script!");
   }
-  blinkM_setFadeSpeed(12);
+  blinkM_setFadeSpeed(13);
 
   while(1){
     if(blinkM_fadeToRGB(0xFF,0x0,0x0)){

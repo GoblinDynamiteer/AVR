@@ -176,3 +176,23 @@ void timer1init(uint8_t prescaler){
     /*  Init Timer/Counter 0   */
     SET_COUNTER1 = 0;
 }
+
+void i2cInit(void){
+	/*	 TWI Status Register TWSR -- Data sheet page 231
+		last two bits (TWPS0 & TWPS1) is prescaler value for clock
+		0/0 = prescaler OFF
+		0/1 = 4
+		1/0 = 16
+		1/1 = 64
+	*/
+	TWSR = 0; //set prescaler off
+	/*	TWBR – TWI Bit Rate Register -- Data sheet page 230
+		SCL_FREQUENCY = F_CPU/(16+2(TWBR)*Prescaler) ->
+		TWBR = ((F_CPU/SCL_FREQUENCY)-16)/2 | if prescaler is 1
+	*/
+	int16_t bitrate = ((F_CPU/SCL_FREQUENCY)-16)/2;
+	if(bitrate < 10){
+		bitrate = ((4000000/SCL_FREQUENCY)-16)/2;
+	}
+	TWBR = (uint8_t)bitrate;
+}
