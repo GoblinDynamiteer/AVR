@@ -145,7 +145,7 @@ uint16_t ADCRead(uint8_t ADCpin){
   return (ADC);
 }
 
-int _ADCStart(void){
+void _ADCStart(void){
   /*  Start conversion - data sheet page 249  */
   ADCSRA |= (1<<ADSC);
   /*  ADSC is set to 0 when conversion is complete  */
@@ -183,16 +183,81 @@ void i2cInit(void){
 		0/0 = prescaler OFF
 		0/1 = 4
 		1/0 = 16
-		1/1 = 64
-	*/
+		1/1 = 64 */
 	TWSR = 0; //set prescaler off
 	/*	TWBR – TWI Bit Rate Register -- Data sheet page 230
 		SCL_FREQUENCY = F_CPU/(16+2(TWBR)*Prescaler) ->
-		TWBR = ((F_CPU/SCL_FREQUENCY)-16)/2 | if prescaler is 1
-	*/
-	int16_t bitrate = ((F_CPU/SCL_FREQUENCY)-16)/2;
+		TWBR = ((F_CPU/SCL_FREQUENCY)-16)/2 | if prescaler is 1 */
+	int bitrate = (int)((F_CPU/SCL_FREQUENCY)-16)/2;
 	if(bitrate < 10){
 		bitrate = ((4000000/SCL_FREQUENCY)-16)/2;
 	}
 	TWBR = (uint8_t)bitrate;
+}
+
+uint8_t i2cWrite(uint8_t adress){
+	_i2cSetStartCondition();
+	return _i2cSetDeviceAdress(adress, 1);
+}
+
+uint8_t i2cSendByte(uint8_t data){
+	/*	Code from data sheet page 270 	*/
+	/*	Load DATA into TWDR Register. Clear
+		TWINT bit in TWCR to start transmission of data. 	*/
+	TWDR = data;
+	TWCR = (1<<TWINT) | (1<<TWEN);
+	_i2cWaitIntFlag();
+	return _i2cCheckTWSR(I2C_DATA_SENT_ACK_RECIEVED);
+}
+
+void i2cStop(void){
+	_i2cSetStopCondition();
+}
+
+uint8_t _i2cSetStartCondition(void){
+	/*	Code from data sheet page 270 	*/
+	/*	Send START condition	*/
+	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+	_i2cWaitIntFlag();
+	return _i2cCheckTWSR(I2C_START_TRANSMITTED);
+}
+
+void _i2cSetStopCondition(void){
+	/*	Code from data sheet page 271 	*/
+	/*	Send STOP condition	*/
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
+	/*	When the STOP condition is executed on the bus,
+		the TWSTO bit is cleared automatically 	*/
+	while(TWCR & (1<<TWSTO)){
+		;
+	}
+}
+
+uint8_t _i2cSetDeviceAdress(uint8_t a, uint8_t readWrite){
+	/*	Code from data sheet page 270 	*/
+	/* Load SLA_W into TWDR Register. Clear
+	TWINT bit in TWCR to start transmission of
+	address. */
+	TWDR = a + readWrite;
+	_i2cWaitIntFlag();
+	return _i2cCheckTWSR(I2C_SLA_W_ACK_RECIEVED);
+}
+
+void _i2cWaitIntFlag(void){
+	/*	Code from data sheet page 270 	*/
+	/*	Wait for TWINT Flag set. This indicates
+		that the START condition has been transmitted. 	*/
+	while (!(TWCR & (1<<TWINT))){
+		;
+	}
+}
+
+uint8_t _i2cCheckTWSR(uint8_t status){
+	/*	Check value of TWI Status Register. Mask
+		prescaler bits. If status different from
+		START go to ERROR. 	*/
+	if((TWSR & (0b11111000)) != status){
+		return 0; //ERROR
+	}
+	return 1;
 }
