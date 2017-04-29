@@ -197,7 +197,7 @@ void i2cInit(void){
 
 uint8_t i2cWrite(uint8_t adress){
 	_i2cSetStartCondition();
-	return _i2cSetDeviceAdress(adress, 1);
+	return _i2cSetDeviceAdress(adress, 0x00);
 }
 
 uint8_t i2cSendByte(uint8_t data){
@@ -239,14 +239,14 @@ uint8_t _i2cSetDeviceAdress(uint8_t a, uint8_t readWrite){
 	TWINT bit in TWCR to start transmission of
 	address. */
 	TWDR = a + readWrite;
+	TWCR = (1<<TWINT) | (1<<TWEN);
 	_i2cWaitIntFlag();
 	return _i2cCheckTWSR(I2C_SLA_W_ACK_RECIEVED);
 }
 
 void _i2cWaitIntFlag(void){
 	/*	Code from data sheet page 270 	*/
-	/*	Wait for TWINT Flag set. This indicates
-		that the START condition has been transmitted. 	*/
+	/*	Wait for TWINT Flag set. 	*/
 	while (!(TWCR & (1<<TWINT))){
 		;
 	}
@@ -256,7 +256,8 @@ uint8_t _i2cCheckTWSR(uint8_t status){
 	/*	Check value of TWI Status Register. Mask
 		prescaler bits. If status different from
 		START go to ERROR. 	*/
-	if((TWSR & (0b11111000)) != status){
+	uint8_t TWSRstatus = (TWSR & (0b11111000));
+	if(TWSRstatus != status){
 		return 0; //ERROR
 	}
 	return 1;
