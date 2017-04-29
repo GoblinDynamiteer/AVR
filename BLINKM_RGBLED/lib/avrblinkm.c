@@ -7,6 +7,7 @@
 */
 
 #include "avrblinkm.h"
+#include "libavr.h"
 
 uint8_t blinkM_stopScript(void){
   return _blinkM_sendCommand0arg(BLINKM_CMD_STOPSCRIPT);
@@ -26,35 +27,36 @@ uint8_t blinkM_setFadeSpeed(uint8_t n){
 }
 
 uint8_t _blinkM_startI2C(void){
-  uint8_t success = i2c_start(BLINKM_ADDRESS | I2C_WRITE);
+  uint8_t success = i2cWrite(BLINKM_ADDRESS);
+  //uint8_t success = i2c_start(BLINKM_ADDRESS|I2C_WRITE);
   _delay_us(10);
-  return !success;
+  return success;
 }
 
 /*  Send command without arguments to blinkM   */
 uint8_t _blinkM_sendCommand0arg(uint8_t c){
   uint8_t success = _blinkM_startI2C();
-  i2c_write(c);
-  i2c_stop();
+  i2cSendByte(c);
+  i2cStop();
   return success;
 }
 
 /*  Send command with one argument to blinkM   */
 uint8_t _blinkM_sendCommand1arg(uint8_t c, uint8_t a1){
   uint8_t success = _blinkM_startI2C();
-  i2c_write(c);
-  i2c_write(a1);
-  i2c_stop();
+  i2cSendByte(c);
+  i2cSendByte(a1);
+  i2cStop();
   return success;
 }
 
 /*  Send command with three arguments to blinkM   */
 uint8_t _blinkM_sendCommand3arg(uint8_t c, uint8_t a1, uint8_t a2, uint8_t a3){
   uint8_t success = _blinkM_startI2C();
-  i2c_write(c);
-  i2c_write(a1);
-  i2c_write(a2);
-  i2c_write(a3);
-  i2c_stop();
+  i2cSendByte(c);
+  i2cSendByte(a1);
+  i2cSendByte(a2);
+  i2cSendByte(a3);
+  i2cStop();
   return success;
 }

@@ -13,7 +13,6 @@
 #define F_CPU 1000000UL
 #endif
 
-#include "i2c.h"
 #include <util/delay.h>
 
 //#define BLINKM_ADDRESS 0x09
