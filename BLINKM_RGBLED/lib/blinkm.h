@@ -9,6 +9,8 @@
 #ifndef _AVRBLINKM_H_
 #define _AVRBLINKM_H_
 
+#include "libavr.h"
+
 #ifndef F_CPU
 #define F_CPU 1000000UL
 #endif

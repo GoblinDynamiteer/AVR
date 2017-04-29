@@ -10,7 +10,7 @@
 
 #include <avr/io.h>
 #include "lib/libavr.h"
-#include "lib/avrblinkm.h"
+#include "lib/blinkm.h"
 
 int main(void){
   SerialInit(F_CPU/16/BAUD_RATE-1);

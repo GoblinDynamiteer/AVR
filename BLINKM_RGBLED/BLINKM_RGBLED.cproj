@@ -118,10 +118,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="lib\avrblinkm.c">
+    <Compile Include="lib\blinkm.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\avrblinkm.h">
+    <Compile Include="lib\blinkm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\libavr.c">

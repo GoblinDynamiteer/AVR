@@ -6,8 +6,7 @@
 
 */
 
-#include "avrblinkm.h"
-#include "libavr.h"
+#include "blinkm.h"
 
 uint8_t blinkM_stopScript(void){
   return _blinkM_sendCommand0arg(BLINKM_CMD_STOPSCRIPT);
