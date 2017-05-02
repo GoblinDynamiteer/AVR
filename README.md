@@ -19,10 +19,19 @@ Serial output with RX/TX
 Analog to Digital conversion  
 [YouTube](https://youtu.be/QwREf1pDAZU)  
 
+**[ [BLINKM_RGBLED](https://github.com/GoblinDynamiteer/AVR/tree/master/BLINKM_RGBLED) ]**   
+ThingM BlinkM RGB-led I2C
+
+**[ [RESISTOR_LADDER_DAC](https://github.com/GoblinDynamiteer/AVR/tree/master/RESISTOR_LADDER_DAC) ]**   
+4bit digital to analog conversion with R–2R resistor ladder   
+
 
 ---
 
 **Img:**  
+DAC  
+![Ladder](https://raw.githubusercontent.com/GoblinDynamiteer/AVR/master/img/dac_resistor_ladder.PNG)
+
 Serial UART Atmega328p -> Realterm  
 ![Realterm](https://raw.githubusercontent.com/GoblinDynamiteer/AVR/master/img/usart_ledonoff.PNG)
 
