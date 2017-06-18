@@ -124,10 +124,16 @@
     <Compile Include="lib\blinkm.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\libavr.c">
+    <Compile Include="lib\lib_avr_i2c.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\libavr.h">
+    <Compile Include="lib\lib_avr_i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\lib_avr_usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\lib_avr_usart.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
