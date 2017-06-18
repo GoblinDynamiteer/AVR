@@ -75,7 +75,7 @@ From 328p Datasheet page 176
 Init USART with Baud rate --
 Calculate ubrr with F_CPU/16/BAUD-1
  */
-void SerialInit(uint8_t ubrr){
+void SerialInit(uint16_t ubrr){
   /* From 328p Datasheet page 176  */
   /* Set baud rate in register UBRRn */
 	UBRR0H = (uint8_t)(ubrr >> 8);

@@ -25,7 +25,7 @@ void setPin(uint8_t pin, uint8_t onOff);
 void SerialSend(char * data);
 void SerialSendNL(char * data);
 void _SerialSendData(char data);
-void SerialInit(uint8_t ubrr);
+void SerialInit(uint16_t ubrr);
 void _SerialNewLine(void);
 
 #define sleep(x) _delay_ms(x)

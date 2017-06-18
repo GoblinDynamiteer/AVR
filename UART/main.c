@@ -15,21 +15,28 @@
  */
 
 #include <avr/io.h>
-#define F_CPU 1000000UL
+
+#define F_CPU 16000000UL
+#define BAUD_RATE 115200
+#define BASE_DECIMAL 10
+#define BASE_HEXADECIMAL 16
+
 #include <util/delay.h>
 #include "lib/libavr.h"
+#include "lib/lib_avr_usart.h"
 
-#define BAUD_RATE 2400
 
 int main(void){
-	pinMode(28, OUTPUT); //LED-pin
-	SerialInit(F_CPU/16/BAUD_RATE-1);
+	USART_Init(F_CPU, BAUD_RATE);
 	while(1){
-    SerialSendNL("LED ON");
-		setPin(28, ON);
+		USART_Send_NewLine("HELLOW");
 		wait(1000);
-		SerialSendNL("LED OFF");
-		setPin(28, OFF);
+		USART_Send_NewLine("BYE!");
+		wait(1000);
+		USART_Send_Num_NewLine(54, BASE_DECIMAL);
+		USART_Send_Num(32, BASE_DECIMAL);
+		USART_Send(" = 0x");
+		USART_Send_Num_NewLine(32, BASE_HEXADECIMAL);
 		wait(1000);
 	}
 	return 0;

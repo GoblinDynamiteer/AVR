@@ -124,6 +124,12 @@
     <Compile Include="lib\libavr.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\lib_avr_usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\lib_avr_usart.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
