@@ -23,18 +23,26 @@ int main(void){
 	USART_Init(F_CPU, BAUD_RATE);
 	I2C_Init(F_CPU, F_SCL);
 	
-	uint8_t pwm = 0x01;
+	BlinkM_SetFadeSpeed(20);
 	
-	while(1){
-		for (; pwm < PWM_MAX; pwm++){
-			BlinkM_SetColor(pwm, 0x00, 0x00);
-			_delay_ms(FADE_DELAY);
-		}
-		for (; pwm > 0x00; pwm--){
-			BlinkM_SetColor(pwm, 0x00, 0x00);
-			_delay_ms(FADE_DELAY);
-			}
-	}
+	BlinkM_StopScript();
+		
+	BlinkM_SetColor(0x00,0x00,0x80);
 
+	while(1){
+		BlinkM_FadeToColor(0xFF, 0x00, 0x00);
+		_delay_ms(2000);
+		BlinkM_FadeToColor(0xFF, 0xFF, 0x00);
+		_delay_ms(2000);
+		BlinkM_FadeToColor(0x00, 0xFF, 0xFF);
+		_delay_ms(2000);
+		BlinkM_FadeToColor(0xFF, 0x00, 0xFF);
+		_delay_ms(2000);
+	}
+	
+	
+
+
+	
 	return 0;
 }
